@@ -1,17 +1,21 @@
+"use client";
+
 import type { ReactNode } from "react";
+import { useState } from "react";
 import Image from "next/image";
 
 const LINKS = {
 	instagram: "https://instagram.com/hiresflow",
-	whatsappChannel: "https://whatsapp.com/channel/XXXXXXXX",
-	whatsappGroup: "https://chat.whatsapp.com/XXXXXXXX",
-	email: "hi@hiresflow.com",
+	threads: "https://www.threads.com/@hiresflow",
+	whatsappChannel: "https://www.whatsapp.com/channel/0029VbDokbuKLaHkdgYFya2h",
+	whatsappGroup: "https://chat.whatsapp.com/K6t1KFFkxMQ90CeI3Qk8SB",
+	email: "hi@hiresflow.id",
 };
 
 const METRICS = [
 	{ value: "2,000+", label: "Community Talents" },
 	{ value: "500+", label: "Channel Subscribers" },
-	{ value: "X,XXX+", label: "Instagram Followers" },
+	{ value: "12K+", label: "Instagram Followers" },
 	{ value: "100%", label: "Human Vetted" },
 ];
 
@@ -109,6 +113,12 @@ function Icon({
 					<path d="M6 6l12 12M18 6 6 18" />
 				</svg>
 			);
+		case "menu":
+			return (
+				<svg {...common}>
+					<path d="M4 6h16M4 12h16M4 18h16" />
+				</svg>
+			);
 		case "check":
 			return (
 				<svg {...common}>
@@ -141,6 +151,16 @@ function Icon({
 				<svg {...common}>
 					<path d="M3 21l1.6-4.6A8.5 8.5 0 1 1 8 19.6L3 21Z" />
 					<path d="M9 9.5c0 3 2.5 5.5 5.5 5.5l1-1.5-2-1-1 .8a3.5 3.5 0 0 1-1.6-1.6l.8-1-1-2L9 9.5Z" />
+				</svg>
+			);
+		case "threads":
+			return (
+				<svg
+					viewBox="0 0 24 24"
+					className={className}
+					fill="currentColor"
+					aria-hidden>
+					<path d="M18.263 11.097c-.03-3.486-1.92-5.586-5.111-5.586-2.13 0-3.922.963-4.863 2.499l2.062 1.438c.535-.843 1.272-1.543 2.628-1.543 1.528 0 2.318.85 2.544 2.431a15 15 0 0 0-2.236-.173c-4.125 0-6.068 1.867-6.068 4.336s1.943 3.99 4.804 3.99c3.139 0 5.013-2.115 5.781-4.735.798.361 1.348 1.204 1.348 2.47 0 3.387-3.907 5.232-7.22 5.232-4.885 0-8.077-3.207-8.077-8.424 0-6.392 4.223-10.487 9.9-10.487 3.808 0 5.69 1.671 6.97 3.914l2.108-1.475C21.44 2.078 18.331 0 13.663 0 6.227 0 1.168 5.277 1.168 12.934c0 7 4.953 11.066 10.856 11.066 4.878 0 9.809-2.846 9.809-7.716 0-2.545-1.46-4.231-3.569-5.187m-6.33 4.855c-1.077 0-2.026-.512-2.026-1.453 0-1.483 1.822-1.934 3.606-1.934.678 0 1.34.045 1.927.173-.422 1.927-1.671 3.215-3.508 3.214Z" />
 				</svg>
 			);
 		default:
@@ -188,51 +208,93 @@ function Badge({
 	);
 }
 
+const NAV_LINKS = [
+	{ label: "How It Works", href: "#how-it-works" },
+	{ label: "What We're Cooking", href: "#what-we-cooking" },
+	{ label: "Join Channel", href: "#join" },
+];
+
+function SegmentToggle({ className = "" }: { className?: string }) {
+	return (
+		<div
+			role="tablist"
+			aria-label="Audience"
+			className={`items-center justify-center rounded-full border border-zinc-200 bg-zinc-100 p-1 text-sm ${className}`}>
+			<button
+				role="tab"
+				aria-selected="true"
+				className="flex-1 rounded-full bg-black px-4 py-1.5 font-medium text-white md:flex-none">
+				For Talent
+			</button>
+			<div className="group relative flex-1 md:flex-none">
+				<button
+					role="tab"
+					aria-selected="false"
+					aria-disabled="true"
+					tabIndex={0}
+					className="w-full cursor-not-allowed rounded-full px-4 py-1.5 font-medium text-zinc-400">
+					For HR <span className="text-xs">(Coming Soon)</span>
+				</button>
+				<div
+					role="tooltip"
+					className="pointer-events-none absolute left-1/2 top-full z-10 mt-2 w-56 -translate-x-1/2 rounded-xl bg-black px-3 py-2 text-center text-xs leading-5 text-white opacity-0 shadow-lg transition-opacity group-hover:opacity-100 group-focus-within:opacity-100">
+					Automated hiring portal coming soon. Manual submission via DM
+				</div>
+			</div>
+		</div>
+	);
+}
+
 export default function Home() {
+	const [menuOpen, setMenuOpen] = useState(false);
+
 	return (
 		<div
 			id="top"
 			className="min-h-screen bg-zinc-50 p-2 font-sans text-zinc-900 sm:p-3">
 			<div className="mx-auto flex max-w-6xl flex-col gap-2 sm:gap-3">
 				<header className="sticky top-2 z-50 rounded-2xl border border-zinc-200/80 bg-white/90 px-4 py-3 shadow-sm backdrop-blur sm:top-3 sm:px-6">
-					<div className="flex flex-wrap items-center justify-between gap-3">
+					<div className="flex items-center justify-between gap-3">
 						<Logo />
 
-						<div
-							role="tablist"
-							aria-label="Audience"
-							className="order-last flex w-full items-center justify-center rounded-full border border-zinc-200 bg-zinc-100 p-1 text-sm md:order-none md:w-auto">
-							<button
-								role="tab"
-								aria-selected="true"
-								className="flex-1 rounded-full bg-black px-4 py-1.5 font-medium text-white md:flex-none">
-								For Talent
-							</button>
-							<div className="group relative flex-1 md:flex-none">
-								<button
-									role="tab"
-									aria-selected="false"
-									aria-disabled="true"
-									tabIndex={0}
-									className="w-full cursor-not-allowed rounded-full px-4 py-1.5 font-medium text-zinc-400">
-									For HR <span className="text-xs">(Coming Soon)</span>
-								</button>
-								<div
-									role="tooltip"
-									className="pointer-events-none absolute left-1/2 top-full z-10 mt-2 w-56 -translate-x-1/2 rounded-xl bg-black px-3 py-2 text-center text-xs leading-5 text-white opacity-0 shadow-lg transition-opacity group-hover:opacity-100 group-focus-within:opacity-100">
-									Automated hiring portal coming soon. Manual submission via DM
-								</div>
-							</div>
-						</div>
+						<nav className="hidden flex-1 items-center justify-center gap-1 md:flex">
+							{NAV_LINKS.map((link) => (
+								<a
+									key={link.href}
+									href={link.href}
+									className="rounded-full px-4 py-2 text-sm font-medium text-zinc-600 transition-colors hover:bg-zinc-100 hover:text-zinc-900">
+									{link.label}
+								</a>
+							))}
+						</nav>
 
-						<a
-							href={LINKS.whatsappChannel}
-							target="_blank"
-							rel="noopener noreferrer"
-							className="rounded-full bg-black px-5 py-2 text-sm font-medium text-white transition-colors hover:bg-zinc-800">
-							Join Channel
-						</a>
+						<div className="flex items-center gap-2">
+							<SegmentToggle className="hidden md:flex" />
+							<button
+								type="button"
+								onClick={() => setMenuOpen((open) => !open)}
+								aria-label={menuOpen ? "Close menu" : "Open menu"}
+								aria-expanded={menuOpen}
+								className="flex h-10 w-10 items-center justify-center rounded-full border border-zinc-200 text-zinc-900 transition-colors hover:bg-zinc-100 md:hidden">
+								<Icon name={menuOpen ? "x" : "menu"} className="h-5 w-5" />
+							</button>
+						</div>
 					</div>
+
+					{menuOpen && (
+						<nav className="mt-3 flex flex-col gap-1 border-t border-zinc-200 pt-3 md:hidden">
+							{NAV_LINKS.map((link) => (
+								<a
+									key={link.href}
+									href={link.href}
+									onClick={() => setMenuOpen(false)}
+									className="rounded-xl px-4 py-2.5 text-sm font-medium text-zinc-700 transition-colors hover:bg-zinc-100">
+									{link.label}
+								</a>
+							))}
+							<SegmentToggle className="mt-2 flex w-full" />
+						</nav>
+					)}
 				</header>
 
 				<main className="flex flex-col gap-2 sm:gap-3">
@@ -345,7 +407,9 @@ export default function Home() {
 						</div>
 					</section>
 
-					<section className="rounded-3xl bg-white px-5 py-16 sm:px-10 sm:py-24">
+					<section
+						id="how-it-works"
+						className="scroll-mt-24 rounded-3xl bg-white px-5 py-16 sm:px-10 sm:py-24">
 						<div className="mx-auto max-w-3xl text-center">
 							<Badge>How It Works Today</Badge>
 							<h2 className="mt-5 text-3xl font-semibold tracking-tight sm:text-5xl">
@@ -379,7 +443,9 @@ export default function Home() {
 						</div>
 					</section>
 
-					<section className="relative overflow-hidden rounded-3xl bg-[#0a0a0f] px-5 py-16 text-white sm:px-10 sm:py-24">
+					<section
+						id="what-we-cooking"
+						className="relative scroll-mt-24 overflow-hidden rounded-3xl bg-[#0a0a0f] px-5 py-16 text-white sm:px-10 sm:py-24">
 						<div
 							aria-hidden
 							className="pointer-events-none absolute -left-24 -top-24 h-96 w-96 rounded-full bg-indigo-600/25 blur-[120px]"
@@ -427,7 +493,9 @@ export default function Home() {
 						</div>
 					</section>
 
-					<section className="relative overflow-hidden rounded-3xl bg-white px-5 py-16 text-center sm:px-10 sm:py-24">
+					<section
+						id="join"
+						className="relative scroll-mt-24 overflow-hidden rounded-3xl bg-white px-5 py-16 text-center sm:px-10 sm:py-24">
 						<div
 							aria-hidden
 							className="pointer-events-none absolute inset-x-0 bottom-0 h-64 bg-[radial-gradient(60%_100%_at_50%_100%,rgba(20,184,166,0.12),transparent)]"
@@ -470,6 +538,13 @@ export default function Home() {
 									rel="noopener noreferrer"
 									className="flex items-center gap-2 transition-colors hover:text-white">
 									<Icon name="instagram" className="h-4 w-4" /> Instagram
+								</a>
+								<a
+									href={LINKS.threads}
+									target="_blank"
+									rel="noopener noreferrer"
+									className="flex items-center gap-2 transition-colors hover:text-white">
+									<Icon name="threads" className="h-4 w-4" /> Threads
 								</a>
 								<a
 									href={LINKS.whatsappChannel}
